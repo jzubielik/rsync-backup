@@ -46,7 +46,6 @@ RSYNC_OPTS=(
 )
 
 for i in ${@}; do
-  echo $i
   case ${i} in
     -i)
       exec > >(tee -i ${LOG_DIR}/${LOG_FILE})
