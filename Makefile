@@ -9,5 +9,8 @@ config:
 init:
 	$(HOME)/.local/bin/sync.sh init
 
-crontab:
+enable:
 	crontab -l | { cat; echo "*/5 * * * * $(HOME)/.local/bin/sync.sh"; } | crontab -
+
+disable:
+	crontab -l | grep -v "$(HOME)/.local/bin/sync.sh" | crontab -
