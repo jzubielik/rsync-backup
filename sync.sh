@@ -61,7 +61,6 @@ for i in ${@}; do
       ;;
   esac
 done
-exit
 
 source ${CONFIG}
 
