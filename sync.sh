@@ -33,13 +33,6 @@ LOG_FILE=$(date +%Y%m%d-%H%M%S).log
 
 test -d ${LOG_DIR} || mkdir -p ${LOG_DIR}
 
-if [ "${1}" == "-i" ]; then
-  exec > >(tee -i ${LOG_DIR}/${LOG_FILE})
-else
-  exec > ${LOG_DIR}/${LOG_FILE}
-  exec 2>&1
-fi
-
 LOCK_TIMEOUT=600
 
 RSYNC_OPTS=(
@@ -51,6 +44,24 @@ RSYNC_OPTS=(
   --delete
   --one-file-system
 )
+
+for i in ${@}; do
+  echo $i
+  case ${i} in
+    -i)
+      exec > >(tee -i ${LOG_DIR}/${LOG_FILE})
+      ;;
+    init)
+      exec > >(tee -i ${LOG_DIR}/${LOG_FILE})
+      RSYNC_OPTS=(${RSYNC_OPTS[@]/--delete})
+      ;;
+    *)
+      exec > ${LOG_DIR}/${LOG_FILE}
+      exec 2>&1
+      ;;
+  esac
+done
+exit
 
 source ${CONFIG}
 
