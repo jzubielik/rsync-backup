@@ -65,7 +65,7 @@ source ${CONFIG}
 
 RSYNC_CMD="rsync ${RSYNC_OPTS[*]}"
 
-REMOTE_LOCK=/tmp/rsync-backup-${USER}-${HOSTNAME}.lock
+REMOTE_LOCK=/tmp/rsync-backup-${REMOTE_USER}-${REMOTE_HOST}.lock
 
 function is_locked() {
   ssh ${REMOTE_USER}@${REMOTE_HOST} test -f ${REMOTE_LOCK} && echo true || echo false
