@@ -117,6 +117,8 @@ function restore() {
     RSYNC_INCLUDES+=("--include '${i}'")
   done
 
+  RSYNC_OPTS=(${RSYNC_OPTS[@]/--delete})
+  
   ${RSYNC_CMD} ${RSYNC_EXCLUDES[*]} ${RSYNC_INCLUDES[*]} ${REMOTE_USER}@${REMOTE_HOST}:${REMOTE_PATH}/${1}/ ${LOCAL_PATH}/${1}/
 }
 
