@@ -61,8 +61,6 @@ esac
 
 source ${CONFIG}
 
-RSYNC_CMD="rsync ${RSYNC_OPTS[*]}"
-
 REMOTE_LOCK=/tmp/rsync-backup-${REMOTE_USER}-${REMOTE_HOST}.lock
 
 function is_locked() {
@@ -101,6 +99,8 @@ function backup() {
     RSYNC_INCLUDES+=("--include '${i}'")
   done
 
+  RSYNC_CMD="rsync ${RSYNC_OPTS[*]}"
+
   ${RSYNC_CMD} ${RSYNC_EXCLUDES[*]} ${RSYNC_INCLUDES[*]} ${LOCAL_PATH}/${1}/ ${REMOTE_USER}@${REMOTE_HOST}:${REMOTE_PATH}/${1}
 }
 
@@ -118,6 +118,8 @@ function restore() {
   done
 
   RSYNC_OPTS=(${RSYNC_OPTS[@]/--delete})
+
+  RSYNC_CMD="rsync ${RSYNC_OPTS[*]}"
   
   ${RSYNC_CMD} ${RSYNC_EXCLUDES[*]} ${RSYNC_INCLUDES[*]} ${REMOTE_USER}@${REMOTE_HOST}:${REMOTE_PATH}/${1}/ ${LOCAL_PATH}/${1}/
 }
