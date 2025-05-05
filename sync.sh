@@ -45,21 +45,19 @@ RSYNC_OPTS=(
   --one-file-system
 )
 
-for i in ${@}; do
-  case ${i} in
-    -i)
-      exec > >(tee -i ${LOG_DIR}/${LOG_FILE})
-      ;;
-    init)
-      exec > >(tee -i ${LOG_DIR}/${LOG_FILE})
-      RSYNC_OPTS=(${RSYNC_OPTS[@]/--delete})
-      ;;
-    *)
-      exec > ${LOG_DIR}/${LOG_FILE}
-      exec 2>&1
-      ;;
-  esac
-done
+case ${1} in
+  -i)
+    exec > >(tee -i ${LOG_DIR}/${LOG_FILE})
+    ;;
+  init)
+    exec > >(tee -i ${LOG_DIR}/${LOG_FILE})
+    RSYNC_OPTS=(${RSYNC_OPTS[@]/--delete})
+    ;;
+  *)
+    exec > ${LOG_DIR}/${LOG_FILE}
+    exec 2>&1
+    ;;
+esac
 
 source ${CONFIG}
 
