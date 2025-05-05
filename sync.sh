@@ -31,7 +31,7 @@ LOG_DIR=${HOME}/.local/log/rsync-backup
 
 LOG_FILE=$(date +%Y%m%d-%H%M%S).log
 
-test -d ${LOG_DIR} || mkdir -p ${LOG_DIR}/${LOG_FILE}
+test -d ${LOG_DIR} || mkdir -p ${LOG_DIR}
 
 if [ "${1}" == "-i" ]; then
   exec > >(tee -i ${LOG_DIR}/${LOG_FILE})
